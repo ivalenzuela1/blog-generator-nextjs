@@ -1,5 +1,4 @@
 import { NextRequest, NextResponse } from "next/server";
-import { connectToDatabase } from "@/lib/mongo";
 
 export async function GET(request: NextRequest, response: NextResponse) {
   ///const { db } = await connectToDatabase();
