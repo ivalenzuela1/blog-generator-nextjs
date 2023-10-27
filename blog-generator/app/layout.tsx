@@ -1,3 +1,4 @@
+import Navbar from "./components/Navbar";
 import "./globals.css";
 export const metadata = {
   title: "NextJS template with TypeScript, TailwindCSS, and MongoDB",
@@ -15,7 +16,10 @@ export default function RootLayout({
   return (
     <html lang="en">
       <UserProvider>
-        <body>{children}</body>
+        <body className="bg-gray-50">
+          <Navbar />
+          {children}
+        </body>
       </UserProvider>
     </html>
   );
