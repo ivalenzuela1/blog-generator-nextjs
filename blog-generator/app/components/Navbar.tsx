@@ -8,7 +8,6 @@ import { BiCoin, BiLogOut, BiPen } from "react-icons/bi";
 
 export default function Navbar() {
   const { user } = useUser();
-  console.log(user);
   return (
     <nav className="bg-white shadow-md px-6 py-2 z-20 w-full grid grid-cols-3">
       {user ? (
