@@ -9,8 +9,6 @@ import { usePathname } from "next/navigation";
 export default function Sidebar() {
   const { user } = useUser();
   const currentRoute = usePathname();
-  console.log("currentRoute");
-  console.log(currentRoute);
 
   const getIcon = (icon: string) => {
     switch (icon) {
@@ -53,7 +51,7 @@ export default function Sidebar() {
           ))}
         </div>
       ) : (
-        <div></div>
+        <div className="md:mr-32"></div>
       )}
     </>
   );

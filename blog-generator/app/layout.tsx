@@ -2,9 +2,8 @@ import Navbar from "./components/Navbar";
 import Sidebar from "./components/main/Sidebar";
 import "./globals.css";
 export const metadata = {
-  title: "NextJS template with TypeScript, TailwindCSS, and MongoDB",
-  description:
-    "NextJS template with TypeScript, TailwindCSS, and MongoDB, created by @clipper.",
+  title: "Blogger",
+  description: "Blogger description.",
 };
 
 import { UserProvider } from "@auth0/nextjs-auth0/client";
@@ -21,7 +20,7 @@ export default function RootLayout({
           <Navbar />
           <main className="w-full h-full flex flex-col md:flex-row">
             <Sidebar />
-            {children}
+            <div className="w-full md:pr-32">{children}</div>
           </main>
         </body>
       </UserProvider>
