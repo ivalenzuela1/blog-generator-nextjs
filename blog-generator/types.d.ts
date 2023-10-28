@@ -3,3 +3,15 @@ type MenuItem = {
   icon: string;
   route: string;
 };
+
+type PostPrompt = {
+  title: string;
+  description: string;
+  keywords: string;
+  tone: string;
+};
+
+type Tone = {
+  label: string;
+  value: string;
+};
