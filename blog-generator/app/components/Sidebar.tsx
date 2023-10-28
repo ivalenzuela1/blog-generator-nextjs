@@ -3,7 +3,7 @@ import { useUser } from "@auth0/nextjs-auth0/client";
 import Link from "next/link";
 import React from "react";
 import { BiCog, BiHome, BiListUl, BiPlus } from "react-icons/bi";
-import { menuList } from "../../../../data/menuList";
+import { menuList } from "../../../data/menuList";
 import { usePathname } from "next/navigation";
 
 export default function Sidebar() {
