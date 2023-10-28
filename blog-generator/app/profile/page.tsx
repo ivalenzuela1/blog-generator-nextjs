@@ -1,11 +1,13 @@
 "use client";
 
-import Link from "next/link";
+import { profileAtom } from "@/atoms/profileAtom";
 import React from "react";
+import { useRecoilState } from "recoil";
 
 export default function Profile() {
+  const [profile, setProfile] = useRecoilState(profileAtom);
   const addCredits = () => {
-    console.log("Add credits");
+    setProfile((profile) => ({ ...profile, credits: profile.credits + 5 }));
   };
 
   return (
@@ -15,7 +17,7 @@ export default function Profile() {
         Profile
       </h1>
       <h2 className="text-2xl font-bold text-center text-gray-800">
-        You have 0 credits.
+        You have {profile.credits} credits.
       </h2>
       <button
         onClick={addCredits}
