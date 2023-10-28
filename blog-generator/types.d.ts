@@ -15,3 +15,8 @@ type Tone = {
   label: string;
   value: string;
 };
+
+type Profile = {
+  credits: number;
+  uid: string;
+};

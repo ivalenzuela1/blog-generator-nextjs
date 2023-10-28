@@ -1,20 +1,25 @@
 "use client";
 
+import { profileAtom } from "@/atoms/profileAtom";
 import { useUser } from "@auth0/nextjs-auth0/client";
 import Image from "next/image";
 import Link from "next/link";
 import React from "react";
 import { BiCoin, BiLogOut, BiPen } from "react-icons/bi";
+import { useRecoilValue } from "recoil";
 
 export default function Navbar() {
   const { user } = useUser();
+  const profile = useRecoilValue(profileAtom);
+
   return (
     <nav className="bg-white shadow-md px-6 py-2 z-20 w-full grid grid-cols-3">
       {user ? (
         <div className="flex justify-start">
           <div className="flex flex-col md:flex-row justify-start md:gap-4 items-center">
             <div className="flex gap-1 items-center">
-              <BiCoin /> <span className="hidden md:block">Credits</span>: 0
+              <BiCoin /> <span className="hidden md:block">Credits</span>:
+              {profile.credits}
             </div>
             <Link
               href="/profile"
