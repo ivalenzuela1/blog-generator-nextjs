@@ -11,6 +11,12 @@ type PostPrompt = {
   tone: string;
 };
 
+type Post = {
+  title: string;
+  content: string | string[];
+  uid: string;
+};
+
 type Tone = {
   label: string;
   value: string;
