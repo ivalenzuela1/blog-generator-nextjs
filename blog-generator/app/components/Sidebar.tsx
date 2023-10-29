@@ -3,7 +3,7 @@ import { useUser } from "@auth0/nextjs-auth0/client";
 import Link from "next/link";
 import React from "react";
 import { BiCog, BiHome, BiListUl, BiPlus } from "react-icons/bi";
-import { menuList } from "../../../data/menuList";
+import { menu } from "../../data/menu";
 import { usePathname } from "next/navigation";
 
 export default function Sidebar() {
@@ -26,7 +26,7 @@ export default function Sidebar() {
     <>
       {user ? (
         <div className="bg-white border border-gray-100 py-2 flex flex-shrink-0 flex-row justify-around md:justify-start md:flex-col md:h-full md:w-32 z-10">
-          {menuList.map((item, index) => (
+          {menu.map((item, index) => (
             <div key={index}>
               <Link
                 href={item.route}

@@ -1,7 +1,7 @@
 "use client";
 
 import React, { ChangeEvent, useState, FormEvent } from "react";
-import { tones } from "../../../data/tones";
+import { tones } from "../../data/tones";
 
 export default function New() {
   const [inputs, setInputs] = useState<PostPrompt>({
