@@ -3,9 +3,14 @@
 import React, { ChangeEvent, useState, FormEvent } from "react";
 import { tones } from "@/data/tones";
 import { generatePost } from "@/lib/functions";
+import { FaSpinner, FaTired } from "react-icons/fa";
 
 export default function New() {
   const [post, setPost] = useState<Post | null>(null);
+  const [isWaitingForResponse, setIsWaitingForResponse] = useState(false);
+  const [hasSubmitted, setHasSubmitted] = useState(false);
+  const [success, setSuccess] = useState(false);
+  const [error, setError] = useState(false);
   const [inputs, setInputs] = useState<PostPrompt>({
     title: "",
     description: "",
@@ -27,18 +32,29 @@ export default function New() {
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    // fetch data
+    // reset all flags
+    setHasSubmitted(true);
+    setError(false);
+    setSuccess(false);
+    setIsWaitingForResponse(true);
+
     const res = await generatePost(inputs);
     console.log("response pages");
     console.log(res);
-    await res.json().then((data) => {
-      console.log("DATA!");
-      console.log(data.post);
-      setPost(data.post);
-    });
+    await res
+      .json()
+      .then((data) => {
+        setHasSubmitted(false);
+        setSuccess(true);
+        setIsWaitingForResponse(false);
 
-    console.log("inputs");
-    console.log(inputs);
+        setPost(data.post);
+      })
+      .catch((err) => {
+        setHasSubmitted(false);
+        setIsWaitingForResponse(false);
+        setError(true);
+      });
   };
 
   return (
@@ -134,6 +150,37 @@ export default function New() {
               Submit
             </button>
           </form>
+          {isWaitingForResponse && hasSubmitted && (
+            <div className="w-full flex flex-col gap-4 mt-4 items-center">
+              <FaSpinner className="animate-spin w-8 h-8 text-indigo-600" />
+            </div>
+          )}
+          {error && (
+            <div className="w-full flex flex-col gap-4 mt-4 items-center">
+              <FaTired className="w-8 h-8 text-rose-600" />
+              <p className="text-rose-600 text-center">
+                Something went wrong. Please try again.
+              </p>
+            </div>
+          )}
+          {success && post && (
+            <div className="w-full flex flex-col gap-4 mt-4 overflow-y-auto h-[500px] pb-20">
+              <h1 className="text-4xl font-bold text-gray-800 text-center">
+                {post.title}
+              </h1>
+              {typeof post.content === "string" ? (
+                <p className="text-gray-600">{post.content}</p>
+              ) : (
+                <div className="flex flex-col gap-2">
+                  {post.content.map((paragraph, index) => (
+                    <p key={index} className="text-gray-600">
+                      {paragraph}
+                    </p>
+                  ))}
+                </div>
+              )}
+            </div>
+          )}
         </section>
       </section>
     </>
