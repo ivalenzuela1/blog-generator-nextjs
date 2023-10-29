@@ -1,5 +1,4 @@
-// export const menuList: MenuItem2[] = [
-export const menuList = [
+export const menu: MenuItem[] = [
   {
     text: "New",
     icon: "plus",

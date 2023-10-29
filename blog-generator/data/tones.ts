@@ -1,4 +1,4 @@
-export const tones = [
+export const tones: Tone[] = [
   {
     label: "😐 Neutral",
     value: "neutral",
