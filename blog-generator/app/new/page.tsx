@@ -1,9 +1,11 @@
 "use client";
 
 import React, { ChangeEvent, useState, FormEvent } from "react";
-import { tones } from "../../data/tones";
+import { tones } from "@/data/tones";
+import { generatePost } from "@/lib/functions";
 
 export default function New() {
+  const [post, setPost] = useState<Post | null>(null);
   const [inputs, setInputs] = useState<PostPrompt>({
     title: "",
     description: "",
@@ -23,8 +25,18 @@ export default function New() {
     });
   };
 
-  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    // fetch data
+    const res = await generatePost(inputs);
+    console.log("response pages");
+    console.log(res);
+    await res.json().then((data) => {
+      console.log("DATA!");
+      console.log(data.post);
+      setPost(data.post);
+    });
+
     console.log("inputs");
     console.log(inputs);
   };
