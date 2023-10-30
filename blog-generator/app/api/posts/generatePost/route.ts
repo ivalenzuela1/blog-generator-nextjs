@@ -7,8 +7,7 @@ const withApiAuthRequiredExtended = withApiAuthRequired as any;
 
 export const POST = withApiAuthRequiredExtended(
   async (request: NextRequest, response: NextResponse) => {
-    ///const { db } = await connectToDatabase();
-
+    const { db } = await connectToDatabase();
     try {
       // TODO: figure out why getSession() only works with withApiAuthRequiredExtended
       const session = await getSession(request, response);
@@ -66,6 +65,9 @@ export const POST = withApiAuthRequiredExtended(
         content: paragraphs || ["No content generated"],
         uid: user.sub,
       };
+
+      // Add post to database
+      await db.collection("posts").insertOne(post);
 
       return NextResponse.json({ success: true, post }, { status: 200 });
     } catch (error) {
