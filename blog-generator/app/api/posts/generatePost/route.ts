@@ -3,13 +3,13 @@ import { connectToDatabase } from "@/lib/mongo";
 import OpenAI from "openai";
 import { getSession, withApiAuthRequired } from "@auth0/nextjs-auth0";
 
+// Use withApiAuthRequired to ensure a user session exists
 const withApiAuthRequiredExtended = withApiAuthRequired as any;
 
 export const POST = withApiAuthRequiredExtended(
   async (request: NextRequest, response: NextResponse) => {
     const { db } = await connectToDatabase();
     try {
-      // TODO: figure out why getSession() only works with withApiAuthRequiredExtended
       const session = await getSession(request, response);
       const user = session?.user;
 
