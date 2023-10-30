@@ -39,8 +39,6 @@ export default function New() {
     setIsWaitingForResponse(true);
 
     const res = await generatePost(inputs);
-    console.log("response pages");
-    console.log(res);
     await res
       .json()
       .then((data) => {
