@@ -17,6 +17,10 @@ type Post = {
   uid: string;
 };
 
+interface PostWithId extends Post {
+  _id: string;
+}
+
 type Tone = {
   label: string;
   value: string;
