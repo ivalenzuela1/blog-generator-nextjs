@@ -13,13 +13,12 @@ export const GET = withApiAuthRequiredExtended(
       if (!user) {
         return NextResponse.error();
       }
-      const userId = user.sub;
 
       let profile;
       const data = await db
         .collection("profiles")
         .find({
-          uid: userId,
+          uid: user.sub,
         })
         .toArray();
 

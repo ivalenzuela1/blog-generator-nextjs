@@ -18,6 +18,8 @@ export default function Navbar() {
       const profile = await getProfile();
       setProfile(profile);
     };
+
+    // This is preventing the user from logging out
     if (user) fetchProfile();
   }, [profile, setProfile, user]);
 
