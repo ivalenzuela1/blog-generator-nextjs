@@ -59,5 +59,7 @@ export async function addCredits() {
   });
 
   const data = await res.json();
+
+  window.location.href = data.session.url;
   return data.profile;
 }
