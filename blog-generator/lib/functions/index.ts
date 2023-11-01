@@ -51,7 +51,7 @@ export async function getProfile() {
 
 export async function addCredits() {
   const res = await fetch("/api/credits/addCredits", {
-    method: "GET",
+    method: "POST",
     headers: {
       "Content-Type": "application/json",
     },
