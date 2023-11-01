@@ -1,13 +1,17 @@
 "use client";
 
 import { profileAtom } from "@/atoms/profileAtom";
+import { addCredits } from "@/lib/functions";
 import React from "react";
 import { useRecoilState } from "recoil";
 
 export default function Profile() {
   const [profile, setProfile] = useRecoilState(profileAtom);
-  const addCredits = () => {
-    setProfile((profile) => ({ ...profile, credits: profile.credits + 5 }));
+  const handleAddCredits = () => {
+    const handler = async () => {
+      await addCredits();
+    };
+    handler();
   };
 
   return (
@@ -20,7 +24,7 @@ export default function Profile() {
         You have {profile.credits} credits.
       </h2>
       <button
-        onClick={addCredits}
+        onClick={handleAddCredits}
         className="rounded-md px-4 py-2 cursor-pointer bg-indigo-600 text-white text-xl font-bold"
       >
         Buy more credits
