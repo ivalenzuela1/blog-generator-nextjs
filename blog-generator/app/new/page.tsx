@@ -11,6 +11,7 @@ export default function New() {
   const [hasSubmitted, setHasSubmitted] = useState(false);
   const [success, setSuccess] = useState(false);
   const [error, setError] = useState(false);
+  const [response, setResponse] = useState("");
   const [inputs, setInputs] = useState<PostPrompt>({
     title: "",
     description: "",
@@ -42,6 +43,7 @@ export default function New() {
     await res
       .json()
       .then((data) => {
+        setResponse(JSON.stringify(data));
         setHasSubmitted(false);
         setSuccess(true);
         setIsWaitingForResponse(false);
@@ -159,6 +161,7 @@ export default function New() {
               <p className="text-rose-600 text-center">
                 Something went wrong. Please try again.
               </p>
+              <p>{response}</p>
             </div>
           )}
           {success && post && (
