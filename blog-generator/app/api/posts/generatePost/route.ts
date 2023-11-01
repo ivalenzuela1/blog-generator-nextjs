@@ -14,7 +14,11 @@ export const POST = withApiAuthRequiredExtended(
       const user = session?.user;
 
       if (!user) {
-        return NextResponse.error();
+        return NextResponse.json(
+          { message: "Error: No User" },
+          { status: 500 }
+        );
+        //  return NextResponse.error();
       }
 
       const profile = await db
@@ -99,8 +103,8 @@ export const POST = withApiAuthRequiredExtended(
 
       return NextResponse.json({ success: true, post }, { status: 200 });
     } catch (error) {
-      console.log("error");
-      return NextResponse.error();
+      return NextResponse.json({ message: "FAILURE" }, { status: 500 });
+      // return NextResponse.error();
     }
   }
 );
