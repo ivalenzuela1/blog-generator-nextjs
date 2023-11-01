@@ -1,10 +1,7 @@
 "use client";
 
-import Link from "next/link";
 import React from "react";
 import { useUser } from "@auth0/nextjs-auth0/client";
-import Navbar from "./components/Navbar";
-import Content from "./components/main/Content";
 
 export default function Home() {
   const { user, error, isLoading } = useUser();
