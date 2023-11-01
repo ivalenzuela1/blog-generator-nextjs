@@ -8,7 +8,14 @@ const withApiAuthRequiredExtended = withApiAuthRequired as any;
 
 export const POST = withApiAuthRequiredExtended(
   async (request: NextRequest, response: NextResponse) => {
-    const { db } = await connectToDatabase();
+    try {
+      const { db } = await connectToDatabase();
+    } catch (e) {
+      return NextResponse.json(
+        { message: `Database error: ${JSON.stringify(e)}` },
+        { status: 500 }
+      );
+    }
     try {
       const session = await getSession(request, response);
       const user = session?.user;
