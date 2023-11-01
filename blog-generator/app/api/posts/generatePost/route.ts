@@ -1,4 +1,28 @@
 import { NextRequest, NextResponse } from "next/server";
+import { withApiAuthRequired } from "@auth0/nextjs-auth0";
+
+// Use withApiAuthRequired to ensure a user session exists
+const withApiAuthRequiredExtended = withApiAuthRequired as any;
+
+export const POST = withApiAuthRequiredExtended(
+  async (request: NextRequest, response: NextResponse) => {
+    try {
+      const post: Post = {
+        title: "Test Title",
+        content: ["Test Content"],
+        uid: "123456789",
+      };
+
+      return NextResponse.json({ success: true, post }, { status: 200 });
+    } catch (error) {
+      return NextResponse.json({ message: "FAILURE" }, { status: 500 });
+      // return NextResponse.error();
+    }
+  }
+);
+
+/*
+import { NextRequest, NextResponse } from "next/server";
 import { connectToDatabase } from "@/lib/mongo";
 import OpenAI from "openai";
 import { getSession, withApiAuthRequired } from "@auth0/nextjs-auth0";
@@ -126,3 +150,4 @@ export const POST = withApiAuthRequiredExtended(
     }
   }
 );
+*/
