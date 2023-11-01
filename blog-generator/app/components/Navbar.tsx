@@ -20,7 +20,7 @@ export default function Navbar() {
     };
 
     // TODO: This is preventing the user from logging out
-    // if (user) fetchProfile();
+    if (user) fetchProfile();
   }, [profile, setProfile, user]);
 
   return (
