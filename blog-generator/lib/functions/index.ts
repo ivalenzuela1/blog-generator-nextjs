@@ -35,3 +35,29 @@ export async function deletePost(_id: string) {
   const data = await res.json();
   return data;
 }
+
+export async function getProfile() {
+  const res = await fetch("/api/profile/getProfile", {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    cache: "no-cache",
+  });
+
+  const data = await res.json();
+  return data.profile;
+}
+
+export async function addCredits() {
+  const res = await fetch("/api/credits/addCredits", {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    cache: "no-cache",
+  });
+
+  const data = await res.json();
+  return data.profile;
+}

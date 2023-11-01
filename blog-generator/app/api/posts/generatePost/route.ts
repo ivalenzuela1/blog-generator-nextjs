@@ -16,6 +16,24 @@ export const POST = withApiAuthRequiredExtended(
       if (!user) {
         return NextResponse.error();
       }
+
+      const profile = await db
+        .collection("profiles")
+        .find({
+          uid: user.sub,
+        })
+        .toArray();
+
+      if (profile[0].credits < 1) {
+        return NextResponse.json(
+          {
+            success: false,
+            message: "Not enough credits",
+          },
+          { status: 200 }
+        );
+      }
+
       const body = await request.json();
       const { description, keywords, tone, title } = body as PostPrompt;
 
@@ -68,6 +86,16 @@ export const POST = withApiAuthRequiredExtended(
 
       // Add post to database
       await db.collection("posts").insertOne(post);
+
+      // Decrease credits after each post generation
+      await db.collection("profiles").updateOne(
+        {
+          uid: user.sub,
+        },
+        {
+          $inc: { credits: -100 },
+        }
+      );
 
       return NextResponse.json({ success: true, post }, { status: 200 });
     } catch (error) {
