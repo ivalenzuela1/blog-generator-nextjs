@@ -9,7 +9,7 @@ const stripe = new Stripe(process.env.STRIPE_SECRET_KEY as string, {
 });
 const withApiAuthRequiredExtended = withApiAuthRequired as any;
 
-export const GET = withApiAuthRequiredExtended(
+export const POST = withApiAuthRequiredExtended(
   async (request: NextRequest, response: NextResponse) => {
     const { db } = await connectToDatabase();
     try {
