@@ -5,14 +5,6 @@ import Navbar from "./components/Navbar";
 import Sidebar from "./components/Sidebar";
 import "./globals.css";
 
-// TODO: METADATA NOT ALLOWED IN CLIENT COMPONENT ???
-/*
-export const metadata = {
-  title: "Blogger",
-  description: "Blogger description.",
-};
-*/
-
 import { UserProvider } from "@auth0/nextjs-auth0/client";
 
 export default function RootLayout({
@@ -23,6 +15,9 @@ export default function RootLayout({
   return (
     <html lang="en">
       <UserProvider>
+        <head>
+          <title>Blogger</title>
+        </head>
         <RecoilRoot>
           <body className="bg-gray-50 w-full h-screen overflow-clip flex flex-col">
             <Navbar />

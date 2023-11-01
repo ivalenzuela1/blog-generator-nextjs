@@ -19,7 +19,7 @@ export default function Navbar() {
       setProfile(profile);
     };
 
-    // This is preventing the user from logging out
+    // TODO: This is preventing the user from logging out
     if (user) fetchProfile();
   }, [profile, setProfile, user]);
 
