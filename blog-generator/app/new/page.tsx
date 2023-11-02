@@ -50,27 +50,11 @@ export default function New() {
 
       setPost(data.post);
     } catch (e) {
+      setResponse(JSON.stringify(e));
       setHasSubmitted(false);
       setIsWaitingForResponse(false);
       setError(true);
     }
-
-    /*
-    await res
-      .json()
-      .then((data) => {
-        setHasSubmitted(false);
-        setSuccess(true);
-        setIsWaitingForResponse(false);
-
-        setPost(data.post);
-      })
-      .catch((err) => {
-        setHasSubmitted(false);
-        setIsWaitingForResponse(false);
-        setError(true);
-      });
-      */
   };
 
   return (
