@@ -90,7 +90,7 @@ export const POST = withApiAuthRequiredExtended(
 
       // Add post to database
       try {
-        db.collection("posts").insertOne(post);
+        await db.collection("posts").insertOne(post);
       } catch (e) {
         return NextResponse.json(
           { message: `DB push error: ${JSON.stringify(e)}` },
@@ -100,7 +100,7 @@ export const POST = withApiAuthRequiredExtended(
 
       try {
         // Decrease credits after each post generation
-        db.collection("profiles").updateOne(
+        await db.collection("profiles").updateOne(
           {
             uid: user.sub,
           },
