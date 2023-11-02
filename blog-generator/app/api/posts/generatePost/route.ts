@@ -14,7 +14,7 @@ export const POST = withApiAuthRequiredExtended(
       const user = session?.user;
 
       if (!user) {
-        return new NextResponse(`"Error: No User": ${JSON.stringify(e)}`, {
+        return new NextResponse(`Error: No User`, {
           status: 500,
         });
       }
