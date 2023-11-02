@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { getSession, withApiAuthRequired } from "@auth0/nextjs-auth0";
 import { connectToDatabase } from "@/lib/mongo";
+import OpenAI from "openai";
 
 // Use withApiAuthRequired to ensure a user session exists
 const withApiAuthRequiredExtended = withApiAuthRequired as any;
@@ -37,9 +38,34 @@ export const POST = withApiAuthRequiredExtended(
         );
       }
 
+      const body = await request.json();
+      const { description, keywords, tone, title } = body as PostPrompt;
+
+      const openai = new OpenAI({
+        apiKey: process.env.OPENAI_API_KEY as string,
+      });
+
+      const generateTitle = await openai.chat.completions.create({
+        messages: [
+          { role: "system", content: "You are a blog post writer" },
+          {
+            role: "user",
+            content: `Write me a title for a blog post about ${description}. The keywords for the post are as follows: ${keywords}. The tone of the post should be ${tone}. The title should be SEO friendly and no longer than 15 words. Write only one title. ${
+              title.length > 0
+                ? `Take that title into consideration: ${title}.`
+                : ""
+            }}. Do not wrap the title in quotes.`,
+          },
+        ],
+        model: "gpt-3.5-turbo",
+        temperature: 0.2,
+      });
+
+      const titleResponse = generateTitle.choices[0].message.content;
+
       const post: Post = {
-        title: "Test Title",
-        content: ["Test Content"],
+        title: titleResponse || "Test Title",
+        content: ["Test Content", JSON.stringify(body)],
         uid: "123456789",
       };
 
