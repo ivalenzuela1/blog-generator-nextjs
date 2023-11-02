@@ -40,7 +40,22 @@ export default function New() {
     setIsWaitingForResponse(true);
 
     const res = await generatePost(inputs);
-    setResponse(JSON.stringify(res));
+
+    try {
+      const data = await res.json();
+      setResponse(JSON.stringify(data));
+      setHasSubmitted(false);
+      setSuccess(true);
+      setIsWaitingForResponse(false);
+
+      setPost(data.post);
+    } catch (e) {
+      setHasSubmitted(false);
+      setIsWaitingForResponse(false);
+      setError(true);
+    }
+
+    /*
     await res
       .json()
       .then((data) => {
@@ -55,6 +70,7 @@ export default function New() {
         setIsWaitingForResponse(false);
         setError(true);
       });
+      */
   };
 
   return (
@@ -180,6 +196,7 @@ export default function New() {
                   ))}
                 </div>
               )}
+              <p>{response}</p>
             </div>
           )}
         </section>
