@@ -14,11 +14,9 @@ export const POST = withApiAuthRequiredExtended(
       const user = session?.user;
 
       if (!user) {
-        return NextResponse.json(
-          { message: "Error: No User" },
-          { status: 500 }
-        );
-        //  return NextResponse.error();
+        return new NextResponse(`"Error: No User": ${JSON.stringify(e)}`, {
+          status: 500,
+        });
       }
 
       const profile = await db
@@ -29,6 +27,11 @@ export const POST = withApiAuthRequiredExtended(
         .toArray();
 
       if (profile[0].credits < 1) {
+        return new NextResponse(`Not enough credits`, {
+          status: 200,
+        });
+
+        /*
         return NextResponse.json(
           {
             success: false,
@@ -36,6 +39,7 @@ export const POST = withApiAuthRequiredExtended(
           },
           { status: 200 }
         );
+        */
       }
 
       const body = await request.json();
@@ -92,10 +96,9 @@ export const POST = withApiAuthRequiredExtended(
       try {
         await db.collection("posts").insertOne(post);
       } catch (e) {
-        return NextResponse.json(
-          { message: `DB push error: ${JSON.stringify(e)}` },
-          { status: 500 }
-        );
+        return new NextResponse(`DB push error: ${JSON.stringify(e)}`, {
+          status: 400,
+        });
       }
 
       try {
@@ -109,10 +112,9 @@ export const POST = withApiAuthRequiredExtended(
           }
         );
       } catch (e) {
-        return NextResponse.json(
-          { message: `Credit decrease error: ${JSON.stringify(e)}` },
-          { status: 500 }
-        );
+        return new NextResponse(`Credit decrease error: ${JSON.stringify(e)}`, {
+          status: 400,
+        });
       }
 
       return NextResponse.json({ success: true, post }, { status: 200 });
