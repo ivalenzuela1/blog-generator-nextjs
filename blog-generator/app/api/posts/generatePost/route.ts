@@ -14,9 +14,13 @@ export const POST = withApiAuthRequiredExtended(
       const user = session?.user;
 
       if (!user) {
-        return new NextResponse(`Error: No User`, {
-          status: 500,
-        });
+        // return new NextResponse(`Error: No User`, {
+        //    status: 500,
+        //  });
+        return NextResponse.json(
+          { success: false, message: "Error: No User" },
+          { status: 500 }
+        );
       }
 
       const profile = await db
@@ -27,19 +31,10 @@ export const POST = withApiAuthRequiredExtended(
         .toArray();
 
       if (profile[0].credits < 1) {
-        return new NextResponse(`Not enough credits`, {
-          status: 200,
-        });
-
-        /*
         return NextResponse.json(
-          {
-            success: false,
-            message: "Not enough credits",
-          },
+          { success: false, message: "Not enough credits" },
           { status: 200 }
         );
-        */
       }
 
       const body = await request.json();
@@ -96,9 +91,13 @@ export const POST = withApiAuthRequiredExtended(
       try {
         await db.collection("posts").insertOne(post);
       } catch (e) {
-        return new NextResponse(`DB push error: ${JSON.stringify(e)}`, {
-          status: 400,
-        });
+        return NextResponse.json(
+          {
+            success: false,
+            message: `DB push error: ${JSON.stringify(e)}`,
+          },
+          { status: 400 }
+        );
       }
 
       try {
@@ -112,14 +111,26 @@ export const POST = withApiAuthRequiredExtended(
           }
         );
       } catch (e) {
-        return new NextResponse(`Credit decrease error: ${JSON.stringify(e)}`, {
-          status: 400,
-        });
+        return NextResponse.json(
+          {
+            success: false,
+            message: `Credit decrease error: ${JSON.stringify(e)}`,
+          },
+          { status: 400 }
+        );
       }
 
       return NextResponse.json({ success: true, post }, { status: 200 });
     } catch (error) {
-      return NextResponse.json({ message: "FAILURE" }, { status: 500 });
+      return NextResponse.json(
+        { success: false, message: "FAILURE" },
+        { status: 200 }
+      );
+
+      // return new NextResponse(`Error: ${error}`, {
+      //   status: 500,
+      //  });
+      //return new NextResponse.json({ message: "FAILURE" }, { status: 500 });
       // return NextResponse.error();
     }
   }

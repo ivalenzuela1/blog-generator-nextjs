@@ -1,11 +1,14 @@
 export async function generatePost(postPrompt: PostPrompt) {
-  return await fetch("/api/posts/generatePost", {
+  const res = await fetch("/api/posts/generatePost", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
     },
     body: JSON.stringify(postPrompt),
   });
+  const json = await res.json();
+
+  return json;
 }
 
 export async function getPosts() {
