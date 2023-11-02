@@ -1,12 +1,24 @@
 import { NextRequest, NextResponse } from "next/server";
-import { withApiAuthRequired } from "@auth0/nextjs-auth0";
+import { getSession, withApiAuthRequired } from "@auth0/nextjs-auth0";
+import { connectToDatabase } from "@/lib/mongo";
 
 // Use withApiAuthRequired to ensure a user session exists
 const withApiAuthRequiredExtended = withApiAuthRequired as any;
 
 export const POST = withApiAuthRequiredExtended(
   async (request: NextRequest, response: NextResponse) => {
+    const { db } = await connectToDatabase();
     try {
+      const session = await getSession(request, response);
+      const user = session?.user;
+
+      if (!user) {
+        return NextResponse.json(
+          { message: "Error: No User" },
+          { status: 500 }
+        );
+        //  return NextResponse.error();
+      }
       const post: Post = {
         title: "Test Title",
         content: ["Test Content"],
