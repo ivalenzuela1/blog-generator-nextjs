@@ -89,7 +89,14 @@ export const POST = withApiAuthRequiredExtended(
       };
 
       // Add post to database
-      await db.collection("posts").insertOne(post);
+      try {
+        await db.collection("posts").insertOne(post);
+      } catch (e) {
+        return NextResponse.json(
+          { message: `Error: DB PUSH. Message: ${JSON.stringify(e)}` },
+          { status: 500 }
+        );
+      }
 
       /*
       // Decrease credits after each post generation
