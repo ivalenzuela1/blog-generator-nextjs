@@ -98,6 +98,8 @@ export const POST = withApiAuthRequiredExtended(
         );
       }
 
+      /*
+
       try {
         // Decrease credits after each post generation
         await db.collection("profiles").updateOne(
@@ -105,7 +107,7 @@ export const POST = withApiAuthRequiredExtended(
             uid: user.sub,
           },
           {
-            $inc: { credits: -100 },
+            $inc: { credits: -10 },
           }
         );
       } catch (e) {
@@ -114,6 +116,7 @@ export const POST = withApiAuthRequiredExtended(
           { status: 500 }
         );
       }
+      */
 
       return NextResponse.json({ success: true, post }, { status: 200 });
     } catch (error) {
