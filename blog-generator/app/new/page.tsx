@@ -46,13 +46,13 @@ export default function New() {
       setHasSubmitted(false);
       setSuccess(true);
       setIsWaitingForResponse(false);
-
       setPost(data.post);
     } else {
       setResponse(data.message);
       setHasSubmitted(false);
       setIsWaitingForResponse(false);
       setError(true);
+      setSuccess(false);
     }
   };
 
