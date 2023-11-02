@@ -93,22 +93,27 @@ export const POST = withApiAuthRequiredExtended(
         await db.collection("posts").insertOne(post);
       } catch (e) {
         return NextResponse.json(
-          { message: `Error: DB PUSH. Message: ${JSON.stringify(e)}` },
+          { message: `DB push error: ${JSON.stringify(e)}` },
           { status: 500 }
         );
       }
 
-      /*
-      // Decrease credits after each post generation
-      await db.collection("profiles").updateOne(
-        {
-          uid: user.sub,
-        },
-        {
-          $inc: { credits: -100 },
-        }
-      );
-      */
+      try {
+        // Decrease credits after each post generation
+        await db.collection("profiles").updateOne(
+          {
+            uid: user.sub,
+          },
+          {
+            $inc: { credits: -100 },
+          }
+        );
+      } catch (e) {
+        return NextResponse.json(
+          { message: `Credit decrease error: ${JSON.stringify(e)}` },
+          { status: 500 }
+        );
+      }
 
       return NextResponse.json({ success: true, post }, { status: 200 });
     } catch (error) {
