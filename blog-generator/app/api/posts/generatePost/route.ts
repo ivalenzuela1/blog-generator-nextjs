@@ -131,7 +131,6 @@ export const POST = withApiAuthRequiredExtended(
       //   status: 500,
       //  });
       //return new NextResponse.json({ message: "FAILURE" }, { status: 500 });
-      // return NextResponse.error();
     }
   }
 );
