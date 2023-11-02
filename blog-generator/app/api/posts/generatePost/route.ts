@@ -19,6 +19,24 @@ export const POST = withApiAuthRequiredExtended(
         );
         //  return NextResponse.error();
       }
+
+      const profile = await db
+        .collection("profiles")
+        .find({
+          uid: user.sub,
+        })
+        .toArray();
+
+      if (profile[0].credits < 1) {
+        return NextResponse.json(
+          {
+            success: false,
+            message: "Not enough credits",
+          },
+          { status: 200 }
+        );
+      }
+
       const post: Post = {
         title: "Test Title",
         content: ["Test Content"],
