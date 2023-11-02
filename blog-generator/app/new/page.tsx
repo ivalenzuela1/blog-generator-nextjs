@@ -38,6 +38,7 @@ export default function New() {
     setError(false);
     setSuccess(false);
     setIsWaitingForResponse(true);
+    setResponse("");
 
     const res = await generatePost(inputs);
 
