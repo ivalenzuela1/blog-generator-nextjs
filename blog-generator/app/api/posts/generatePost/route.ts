@@ -88,12 +88,10 @@ export const POST = withApiAuthRequiredExtended(
         uid: user.sub,
       };
 
-      /*
-
       // Add post to database
       await db.collection("posts").insertOne(post);
 
-
+      /*
       // Decrease credits after each post generation
       await db.collection("profiles").updateOne(
         {
