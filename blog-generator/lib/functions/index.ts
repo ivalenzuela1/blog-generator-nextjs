@@ -1,5 +1,5 @@
 export async function generatePost(postPrompt: PostPrompt) {
-  return await fetch("/api/posts/generatePost", {
+  return await fetch("/api/posts/generatePostEdge", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
