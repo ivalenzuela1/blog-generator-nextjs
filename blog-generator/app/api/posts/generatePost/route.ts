@@ -74,6 +74,10 @@ export const POST = withApiAuthRequiredExtended(
         temperature: 0.2,
       });
 
+      console.log(postGenerator);
+
+      /*
+
       let postResponse: string = "";
       try {
         postResponse = postGenerator.choices[0].message.content as string;
@@ -103,6 +107,7 @@ export const POST = withApiAuthRequiredExtended(
           { status: 400 }
         );
       }
+      */
 
       const post: Post = {
         title: titleResponse || "No title generated",
