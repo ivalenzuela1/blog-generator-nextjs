@@ -74,17 +74,41 @@ export const POST = withApiAuthRequiredExtended(
         temperature: 0.2,
       });
 
-      const postResponse = generatePost.choices[0].message.content;
+      let postResponse: string = "";
+      try {
+        postResponse = generatePost.choices[0].message.content as string;
+      } catch (e) {
+        return NextResponse.json(
+          {
+            success: false,
+            message: `Error getting content from generatePost: ${JSON.stringify(
+              e
+            )}`,
+          },
+          { status: 400 }
+        );
+      }
 
-      const paragraphs = postResponse?.split("\n\n");
+      let paragraphs: string[] = [];
+      try {
+        paragraphs = postResponse?.split("\n\n");
+      } catch (e) {
+        return NextResponse.json(
+          {
+            success: false,
+            message: `Error getting content from paragraphs: ${JSON.stringify(
+              e
+            )}`,
+          },
+          { status: 400 }
+        );
+      }
 
       const post: Post = {
         title: titleResponse || "No title generated",
         content: paragraphs || ["No content generated"],
         uid: user.sub,
       };
-
-      /*
 
       // Add post to database
       try {
@@ -118,7 +142,6 @@ export const POST = withApiAuthRequiredExtended(
           { status: 400 }
         );
       }
-      */
 
       return NextResponse.json({ success: true, post }, { status: 200 });
     } catch (error) {
