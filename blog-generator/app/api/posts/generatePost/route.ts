@@ -61,6 +61,8 @@ export const POST = withApiAuthRequiredExtended(
       const titleResponse = generateTitle.choices[0].message.content;
       */
 
+      const titleResponse = "Test";
+
       const postGenerator = await openai.chat.completions.create({
         model: "gpt-3.5-turbo",
         messages: [
