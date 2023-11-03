@@ -40,20 +40,26 @@ export default function New() {
     setIsWaitingForResponse(true);
     setResponse("");
 
-    const res = await generatePost(inputs);
-    const data = await res.json();
+    try {
+      const res = await generatePost(inputs);
+      const data = await res.json();
 
-    if (data.success) {
-      setHasSubmitted(false);
-      setSuccess(true);
-      setIsWaitingForResponse(false);
-      setPost(data.post);
-    } else {
-      setResponse(data.message);
-      setHasSubmitted(false);
-      setIsWaitingForResponse(false);
-      setError(true);
-      setSuccess(false);
+      if (data.success) {
+        setHasSubmitted(false);
+        setSuccess(true);
+        setIsWaitingForResponse(false);
+        setPost(data.post);
+      } else {
+        setResponse(data.message);
+        setHasSubmitted(false);
+        setIsWaitingForResponse(false);
+        setError(true);
+        setSuccess(false);
+      }
+    } catch (e) {
+      console.log("ERROR");
+      console.log(e);
+      setResponse(JSON.stringify(e));
     }
   };
 
