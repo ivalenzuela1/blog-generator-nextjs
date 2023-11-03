@@ -40,7 +40,8 @@ export default function New() {
     setIsWaitingForResponse(true);
     setResponse("");
 
-    const data = await generatePost(inputs);
+    const res = await generatePost(inputs);
+    const data = await res.json();
 
     if (data.success) {
       setHasSubmitted(false);
