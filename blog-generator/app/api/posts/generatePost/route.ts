@@ -59,6 +59,7 @@ export const POST = withApiAuthRequiredExtended(
 
       const titleResponse = generateTitle.choices[0].message.content;
 
+      /*
       const postGenerator = await openai.chat.completions.create({
         model: "gpt-3.5-turbo",
         messages: [
@@ -73,10 +74,6 @@ export const POST = withApiAuthRequiredExtended(
         ],
         temperature: 0.2,
       });
-
-      console.log(postGenerator);
-
-      /*
 
       let postResponse: string = "";
       try {
