@@ -41,7 +41,6 @@ export const POST = withApiAuthRequiredExtended(
         apiKey: process.env.OPENAI_API_KEY as string,
       });
 
-      /*
       const generateTitle = await openai.chat.completions.create({
         messages: [
           { role: "system", content: "You are a blog post writer" },
@@ -58,10 +57,7 @@ export const POST = withApiAuthRequiredExtended(
         temperature: 0.2,
       });
 
-      const titleResponse = generateTitle.choices[0].message.content;
-      */
-
-      const titleResponse = "Test";
+      const titleResponse = generateTitle.choices[0].message.content as string;
 
       const postGenerator = await openai.chat.completions.create({
         model: "gpt-3.5-turbo",
@@ -72,7 +68,7 @@ export const POST = withApiAuthRequiredExtended(
           },
           {
             role: "user",
-            content: `Write me a short and interesting blog post about ${description}. The title of the article is as follows: ${titleResponse}. These are the keywords for the post: ${keywords}. The blog post should be short and SEO friendly. The tone of the post should be ${tone}. Write it as well as you can. Do not include the title in the post, just start writing the post. Divide the post into paragraphs and write at least 2 paragraphs. Distinguish the paragraphs with a line break.`,
+            content: `Write me a short and interesting blog post about ${description}. The title of the article is as follows: ${titleResponse}. These are the keywords for the post: ${keywords}. The blog post should be short and SEO friendly. The tone of the post should be ${tone}. Write it as well as you can. Do not include the title in the post, just start writing the post. Divide the post into paragraphs and write at least 2 short paragraphs. Distinguish the paragraphs with a line break.`,
           },
         ],
         temperature: 0.2,
@@ -109,10 +105,8 @@ export const POST = withApiAuthRequiredExtended(
       }
 
       const post: Post = {
-        title: "No title generated",
-        // title: titleResponse || "No title generated",
+        title: titleResponse || "No title generated",
         content: paragraphs || ["No content generated"],
-        //content: ["No content generated"],
         uid: user.sub,
       };
 
