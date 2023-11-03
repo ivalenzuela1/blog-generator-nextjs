@@ -59,8 +59,7 @@ export const POST = withApiAuthRequiredExtended(
 
       const titleResponse = generateTitle.choices[0].message.content;
 
-      /*
-      const generatePost = await openai.chat.completions.create({
+      const postGenerator = await openai.chat.completions.create({
         model: "gpt-3.5-turbo",
         messages: [
           {
@@ -77,7 +76,7 @@ export const POST = withApiAuthRequiredExtended(
 
       let postResponse: string = "";
       try {
-        postResponse = generatePost.choices[0].message.content as string;
+        postResponse = postGenerator.choices[0].message.content as string;
       } catch (e) {
         return NextResponse.json(
           {
@@ -104,12 +103,11 @@ export const POST = withApiAuthRequiredExtended(
           { status: 400 }
         );
       }
-       */
 
       const post: Post = {
         title: titleResponse || "No title generated",
-        //content: paragraphs || ["No content generated"],
-        content: ["No content generated"],
+        content: paragraphs || ["No content generated"],
+        //  content: ["No content generated"],
         uid: user.sub,
       };
 
