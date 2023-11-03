@@ -20,6 +20,8 @@ export const POST = withApiAuthRequiredExtended(
         );
       }
 
+      /*
+
       const profile = await db
         .collection("profiles")
         .find({
@@ -84,7 +86,7 @@ export const POST = withApiAuthRequiredExtended(
         uid: user.sub,
       };
 
-      /*
+      
 
       // Add post to database
       try {
@@ -119,6 +121,12 @@ export const POST = withApiAuthRequiredExtended(
         );
       }
       */
+
+      const post: Post = {
+        title: "No title generated",
+        content: ["No content generated"],
+        uid: user.sub,
+      };
 
       return NextResponse.json({ success: true, post }, { status: 200 });
     } catch (error) {
