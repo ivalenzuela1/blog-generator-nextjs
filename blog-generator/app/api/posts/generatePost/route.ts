@@ -41,6 +41,7 @@ export const POST = withApiAuthRequiredExtended(
         apiKey: process.env.OPENAI_API_KEY as string,
       });
 
+      /*
       const generateTitle = await openai.chat.completions.create({
         messages: [
           { role: "system", content: "You are a blog post writer" },
@@ -58,8 +59,8 @@ export const POST = withApiAuthRequiredExtended(
       });
 
       const titleResponse = generateTitle.choices[0].message.content;
+      */
 
-      /*
       const postGenerator = await openai.chat.completions.create({
         model: "gpt-3.5-turbo",
         messages: [
@@ -104,12 +105,12 @@ export const POST = withApiAuthRequiredExtended(
           { status: 400 }
         );
       }
-      */
 
       const post: Post = {
-        title: titleResponse || "No title generated",
-        //content: paragraphs || ["No content generated"],
-        content: ["No content generated"],
+        title: "No title generated",
+        // title: titleResponse || "No title generated",
+        content: paragraphs || ["No content generated"],
+        //content: ["No content generated"],
         uid: user.sub,
       };
 
