@@ -53,14 +53,14 @@ export const POST = withApiAuthRequiredExtended(
             }}. Do not wrap the title in quotes.`,
           },
         ],
-        model: "gpt-3.5-turbo",
+        model: "gpt-4",
         temperature: 0.2,
+        max_tokens: 50,
       });
 
       const titleResponse = generateTitle.choices[0].message.content as string;
 
       const postGenerator = await openai.chat.completions.create({
-        model: "gpt-3.5-turbo",
         messages: [
           {
             role: "system",
@@ -71,7 +71,9 @@ export const POST = withApiAuthRequiredExtended(
             content: `Write me a short and interesting blog post about ${description}. The title of the article is as follows: ${titleResponse}. These are the keywords for the post: ${keywords}. The blog post should be short and SEO friendly. The tone of the post should be ${tone}. Write it as well as you can. Do not include the title in the post, just start writing the post. Divide the post into paragraphs and write at least 2 short paragraphs. Distinguish the paragraphs with a line break.`,
           },
         ],
+        model: "gpt-4",
         temperature: 0.2,
+        max_tokens: 50,
       });
 
       let postResponse: string = "";
