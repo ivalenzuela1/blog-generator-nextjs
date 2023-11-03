@@ -20,8 +20,6 @@ export const POST = withApiAuthRequiredExtended(
         );
       }
 
-      /*
-
       const profile = await db
         .collection("profiles")
         .find({
@@ -60,6 +58,8 @@ export const POST = withApiAuthRequiredExtended(
       });
 
       const titleResponse = generateTitle.choices[0].message.content;
+
+      /*
 
       const generatePost = await openai.chat.completions.create({
         model: "gpt-3.5-turbo",
@@ -123,7 +123,7 @@ export const POST = withApiAuthRequiredExtended(
       */
 
       const post: Post = {
-        title: "No title generated",
+        title: titleResponse || "No title generated",
         content: ["No content generated"],
         uid: user.sub,
       };
