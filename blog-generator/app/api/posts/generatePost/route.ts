@@ -110,6 +110,8 @@ export const POST = withApiAuthRequiredExtended(
         uid: user.sub,
       };
 
+      /*
+
       // Add post to database
       try {
         await db.collection("posts").insertOne(post);
@@ -142,6 +144,7 @@ export const POST = withApiAuthRequiredExtended(
           { status: 400 }
         );
       }
+      */
 
       return NextResponse.json({ success: true, post }, { status: 200 });
     } catch (error) {
