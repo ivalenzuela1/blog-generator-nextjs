@@ -59,21 +59,34 @@ export const POST = withApiAuthRequiredExtended(
 
       const titleResponse = generateTitle.choices[0].message.content;
 
-      const postGenerator = await openai.chat.completions.create({
-        model: "gpt-3.5-turbo",
-        messages: [
+      try {
+        const postGenerator = await openai.chat.completions.create({
+          model: "gpt-3.5-turbo",
+          messages: [
+            {
+              role: "system",
+              content: "You are a blog post writer.",
+            },
+            {
+              role: "user",
+              content: `Write me a long and interesting blog post about ${description}. The title of the article is as follows: ${titleResponse}. These are the keywords for the post: ${keywords}. The blog post should be long and SEO friendly. The tone of the post should be ${tone}. Write it as well as you can. Do not include the title in the post, just start writing the post. Divide the post into paragraphs and write at least 3 paragraphs. Distinguish the paragraphs with a line break.`,
+            },
+          ],
+          temperature: 0.2,
+        });
+        console.log("postGenerator");
+        console.log(postGenerator);
+      } catch (e) {
+        return NextResponse.json(
           {
-            role: "system",
-            content: "You are a blog post writer.",
+            success: false,
+            message: `Error at generatePost: ${JSON.stringify(e)}`,
           },
-          {
-            role: "user",
-            content: `Write me a long and interesting blog post about ${description}. The title of the article is as follows: ${titleResponse}. These are the keywords for the post: ${keywords}. The blog post should be long and SEO friendly. The tone of the post should be ${tone}. Write it as well as you can. Do not include the title in the post, just start writing the post. Divide the post into paragraphs and write at least 3 paragraphs. Distinguish the paragraphs with a line break.`,
-          },
-        ],
-        temperature: 0.2,
-      });
+          { status: 400 }
+        );
+      }
 
+      /*
       let postResponse: string = "";
       try {
         postResponse = postGenerator.choices[0].message.content as string;
@@ -103,11 +116,12 @@ export const POST = withApiAuthRequiredExtended(
           { status: 400 }
         );
       }
+      */
 
       const post: Post = {
         title: titleResponse || "No title generated",
-        content: paragraphs || ["No content generated"],
-        //  content: ["No content generated"],
+        //content: paragraphs || ["No content generated"],
+        content: ["No content generated"],
         uid: user.sub,
       };
 
