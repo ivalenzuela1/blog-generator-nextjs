@@ -14,9 +14,6 @@ export const POST = withApiAuthRequiredExtended(
       const user = session?.user;
 
       if (!user) {
-        // return new NextResponse(`Error: No User`, {
-        //    status: 500,
-        //  });
         return NextResponse.json(
           { success: false, message: "Error: No User" },
           { status: 500 }
@@ -87,6 +84,8 @@ export const POST = withApiAuthRequiredExtended(
         uid: user.sub,
       };
 
+      /*
+
       // Add post to database
       try {
         await db.collection("posts").insertOne(post);
@@ -119,6 +118,8 @@ export const POST = withApiAuthRequiredExtended(
           { status: 400 }
         );
       }
+      */
+
       return NextResponse.json({ success: true, post }, { status: 200 });
     } catch (error) {
       return NextResponse.json(
