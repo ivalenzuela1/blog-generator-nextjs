@@ -24,7 +24,7 @@ export default function Navbar() {
   }, [profile, setProfile, user]);
 
   return (
-    <nav className="bg-white shadow-md px-6 py-2 z-20 w-full grid grid-cols-3">
+    <nav className="bg-white shadow-md px-6 py-2 z-20 w-full grid grid-cols-3 sticky top-0">
       {user ? (
         <div className="flex justify-start">
           <div className="flex flex-col md:flex-row justify-start md:gap-4 items-center">
