@@ -55,6 +55,7 @@ export const POST = withApiAuthRequiredExtended(
         ],
         model: "gpt-4",
         temperature: 0.2,
+        max_tokens: 50,
       });
 
       const titleResponse = generateTitle.choices[0].message.content as string;
@@ -72,6 +73,7 @@ export const POST = withApiAuthRequiredExtended(
         ],
         model: "gpt-4",
         temperature: 0.2,
+        max_tokens: 50,
       });
 
       let postResponse: string = "";
